@@ -5,6 +5,7 @@ Program został napisany dzięki bibliotece SDL.
 
 # Działanie
 Na ekranie pojawi nam się mapa gry, po której możemy poruszać się przycisakmi wsad, pojawią się również przeciwnicy - duchy, których za wszelką cenę musimy unikać:
+
 ![image info](./screen_do_sprawozdania.png)
 
 # Wielowątkowość
