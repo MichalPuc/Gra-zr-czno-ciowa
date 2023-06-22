@@ -4,6 +4,10 @@
 #include"SDL_image.h"
 #include <iostream>
 #include <vector>
+#include <random>
+#include <cstdlib>
+#include <thread>
+#include <chrono>
 
 class ColliderComponent;
 
@@ -20,12 +24,19 @@ public:
 	void handleEvents();
 	bool running() { return isRunning; }
 
-	static void AddTile(int id, int x, int y);
 
 	static SDL_Renderer* renderer;
 	static SDL_Event event;
 
-	static std::vector<ColliderComponent*> colliders;
+
+
+	enum groupLabels : std::size_t
+	{
+		groupMap,
+		groupPlayers,
+		groupColliders,
+		groupEnemies
+	};
 private:
 	bool isRunning;
 	SDL_Window* window;

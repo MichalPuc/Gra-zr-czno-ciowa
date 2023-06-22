@@ -1,48 +1,66 @@
 #pragma once
-#include "Components.h"
-#include "SDL.h"
-#include "../TextureManager.h"
 
+// Include necessary headers
+#include "Components.h"         // Include Components.h
+#include "SDL.h"                // Include SDL.h
+#include "../TextureManager.h"  // Include TextureManager.h
+
+// Definition of SpriteComponent class
 class SpriteComponent : public Component
 {
 private:
-	TransformComponent* transform;
-	SDL_Texture* texture;
-	SDL_Rect srcRect, destRect;
+    TransformComponent* transform;
+    SDL_Texture* texture;
+    SDL_Rect srcRect, destRect;
+
 public:
-	SpriteComponent() = default;
-	SpriteComponent(const char* path)
-	{
-		setTex(path);
-	}
-	~SpriteComponent()
-	{
-		SDL_DestroyTexture(texture);
-	}
+    // Default constructor
+    SpriteComponent() = default;
 
-	void setTex(const char* path)
-	{
-		texture = TextureManager::LoadTexture(path);
-	}
+    // Constructor with a path parameter to set the texture
+    SpriteComponent(const char* path)
+    {
+        setTex(path);
+    }
 
-	void init() override
-	{
-		transform = &entity->getComponent<TransformComponent>();
-		srcRect.x = srcRect.y = 0;
-		srcRect.w = transform->width;
-		srcRect.h = transform->height;
-	}
-	void update() override
-	{
-		destRect.x = static_cast<int>(transform->position.x);
-		destRect.y = static_cast<int>(transform->position.y);
-		destRect.w = transform->width * transform->scale;
-		destRect.h = transform->height * transform->scale;
-	}
-	void draw() override
-	{
-		TextureManager::Draw(texture, srcRect, destRect);
+    // Destructor
+    ~SpriteComponent()
+    {
+        SDL_DestroyTexture(texture);
+    }
 
-	}
+    // Function to set the texture
+    void setTex(const char* path)
+    {
+        texture = TextureManager::LoadTexture(path);
+    }
+
+    // Initialization function
+    void init() override
+    {
+        // Get a reference to the TransformComponent of the entity
+        transform = &entity->getComponent<TransformComponent>();
+
+        // Set the source rectangle for rendering
+        srcRect.x = srcRect.y = 0;
+        srcRect.w = transform->width;
+        srcRect.h = transform->height;
+    }
+
+    // Update function
+    void update() override
+    {
+        // Update the destination rectangle for rendering
+        destRect.x = static_cast<int>(transform->position.x);
+        destRect.y = static_cast<int>(transform->position.y);
+        destRect.w = transform->width * transform->scale;
+        destRect.h = transform->height * transform->scale;
+    }
+
+    // Draw function
+    void draw() override
+    {
+        // Draw the texture using the source and destination rectangles
+        TextureManager::Draw(texture, srcRect, destRect);
+    }
 };
-
